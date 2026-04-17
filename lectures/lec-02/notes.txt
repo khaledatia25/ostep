@@ -1,0 +1,68 @@
+OS
+    - Virtualization
+    - Concurrency
+    - Persistence
+-----------------------------------------------------------------------------------------
+                    APP
+    ------------------------------------------
+                OS (kernel)
+    ------------------------------------------
+      Hardware (cpu, memory, net, dis, ssd)
+
+Virtualization
+
+Computers have physical limits
+    - limited cpus
+    - limited memory
+Virtualization tends to create an illusion for the programs the they have
+    - as many cpus as needed
+    - as much memory(private) as needed
+
+Goals:
+    - Efficiency.
+    - Security.
+        - Isolation between processes.
+        - Protect the OS from processes.
+
+Abstraction
+    What changes when a program runs?
+        - Memory.
+        - Registers.
+        - I/O
+
+How to virtualize CPU ?
+ => run N processes "at once" event though we have M CPUs (N>M).
+ General Idea:
+  1 CPU, 2 processes A, B
+  run ABBAAB (switch between processes).
+ => Mechanisms: low-level how.
+ => Policies: e.g: which process to run.
+
+First attempt: Direct Execution
+ Boot time: (start up)
+ => OS is the first program to run.
+    - Does some setup: memory free list, process list..etc
+ goal: run one program (simplified)
+    => allocate entry on process list.
+    => allocate memory.
+    => load - from disk - the program into memeory (code, static data).
+    => jupm to the main of the program and start running.
+ observation: only thing runs at a time, OS stops running and the program only runs.
+ Problems:
+  - what if the process wants to do something restricted?
+  - What if the OS wants to stop process A and run process B?
+  - What if the processs P does something that is "slow"?
+
+What if the process wants to do something restricted?
+ Example: access the disk directly
+  Hardware suppport
+   1) Mode of operations (per cpu)
+    - User mode: application runs here, restricted (non-privileged),
+    - Kernal mode: OS runs here, unrestricted (priviliged)
+    there is a bit - per cpu - to determine the mode.
+   2) Transition between modes
+    => instructions:
+        user => kernal: trap
+        kernal => user: return-from-trap
+        setup trap handlers (only in kernal mode)
+Directed Execution is Limited
