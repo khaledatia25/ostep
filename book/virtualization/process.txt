@@ -1,0 +1,22 @@
+Virtualization is all about sharing resources by provide a thoeoritcally unlimited and isolated resources to each program.
+To achieve this We have an Abstraction called the Process.
+Each running program considered a process
+This process can be summarized at any instant of time by taking snapshot of the different pieces of the system the process access or affects during its execution.
+    - memory
+    - registers (program counter, instruction pointer, stack pointer...)
+    - I/O information (files opened, requests sent over the network...)
+
+Process API
+ OS should provide an APIs for atleas the following operations for the process:
+    - create
+    - destroy (forcing)
+    - wait (wait until finish)
+    - miscellaneous control
+    - status
+Process Status
+ - Running: running instruction on CPU right now.
+ - Ready: ready to run at any time but not running.
+ - blocked: process performs an operation that blocks it from being ready.
+
+ process list
+    contains information about all processes in the system. Each entry is found in what is sometimes called a process control block (PCB), which is really just a structure that contains information about a specific process.
